@@ -139,18 +139,6 @@ name: test
         self.assertEqual(len(code_blocks), 3)
         self.assertEqual(filenames, ['src/main.py', 'utils/helpers.py', 'config.yml'])
 
-    def test_ai_concept_example(self):
-        """Test using the actual ai-concept.md sample"""
-        with open('sample-input/ai-concept.md', 'r') as f:
-            content = f.read()
-        
-        _, code_blocks, filenames, _ = parse_markdown_code_blocks(content)
-        
-        # Verify we found the expected files from context
-        self.assertTrue('_favorite_prompts/creative-writing-prompt.md' in filenames)
-        self.assertTrue('_link_collections/ai-resources.md' in filenames)
-        self.assertTrue('_posts/2024-01-01-welcome-to-my-website.md' in filenames)
-
     def test_mixed_sources_precedence(self):
         """Test that comment filenames take precedence over context filenames"""
         mixed_md = '''

@@ -160,45 +160,6 @@ def parse_tree(ascii_tree_str: str) -> list[str]:
 def parse_special_structure(special_block_content):
     return parse_tree(special_block_content)
 
-    """Parse the special structure block and extract file paths."""
-    print("Parsing special structure block...")
-    paths = []
-    current_path = []
-    
-    for line in special_block_content.splitlines():
-        if not line or line == '.':  # Skip empty lines and root
-            continue
-            
-        print(f"Processing line: {line}")
-
-        # Find the position of the first character of the filename
-        # (after the tree symbols)
-        if '──' in line:
-            name = line.split("──")[-1].strip()
-            # Calculate indent level based on the position of the name
-            # First level starts at position 5, each subsequent level is 4 chars further
-            pos = len(line) - len(line.lstrip())
-            indent = (pos - 5) // 4 if pos >= 5 else 0
-            
-            # Adjust current path based on indent level
-            current_path = current_path[:indent]
-            print(f"Current path: {current_path}, indent: {indent}, name: {name}")
-            current_path.append(name)
-            
-            # Build the full path
-            if indent == 0:  # Root level files (like README.md)
-                paths.append(name)
-            else:
-                # For nested files/directories, include all parent directories
-                path_parts = current_path[:]
-                if '.' in name:  # If it's a file
-                    paths.append('/'.join(path_parts))
-                else:  # If it's a directory
-                    paths.append('/'.join(path_parts))
-                
-    print(f"Extracted paths: {paths}")
-    return paths
-
 def assign_blocks_to_files(file_paths, code_blocks):
     """Assign code blocks to file paths."""
     print("Assigning code blocks to file paths...")
